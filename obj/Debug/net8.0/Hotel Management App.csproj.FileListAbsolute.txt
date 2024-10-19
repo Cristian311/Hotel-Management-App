@@ -1,0 +1,14 @@
+C:\Users\sarof\source\repos\Hotel Management App\Hotel Management App\bin\Debug\net8.0\Hotel Management App.exe
+C:\Users\sarof\source\repos\Hotel Management App\Hotel Management App\bin\Debug\net8.0\Hotel Management App.deps.json
+C:\Users\sarof\source\repos\Hotel Management App\Hotel Management App\bin\Debug\net8.0\Hotel Management App.runtimeconfig.json
+C:\Users\sarof\source\repos\Hotel Management App\Hotel Management App\bin\Debug\net8.0\Hotel Management App.dll
+C:\Users\sarof\source\repos\Hotel Management App\Hotel Management App\bin\Debug\net8.0\Hotel Management App.pdb
+C:\Users\sarof\source\repos\Hotel Management App\Hotel Management App\obj\Debug\net8.0\Hotel Management App.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\sarof\source\repos\Hotel Management App\Hotel Management App\obj\Debug\net8.0\Hotel Management App.AssemblyInfoInputs.cache
+C:\Users\sarof\source\repos\Hotel Management App\Hotel Management App\obj\Debug\net8.0\Hotel Management App.AssemblyInfo.cs
+C:\Users\sarof\source\repos\Hotel Management App\Hotel Management App\obj\Debug\net8.0\Hotel Management App.csproj.CoreCompileInputs.cache
+C:\Users\sarof\source\repos\Hotel Management App\Hotel Management App\obj\Debug\net8.0\Hotel Management App.dll
+C:\Users\sarof\source\repos\Hotel Management App\Hotel Management App\obj\Debug\net8.0\refint\Hotel Management App.dll
+C:\Users\sarof\source\repos\Hotel Management App\Hotel Management App\obj\Debug\net8.0\Hotel Management App.pdb
+C:\Users\sarof\source\repos\Hotel Management App\Hotel Management App\obj\Debug\net8.0\Hotel Management App.genruntimeconfig.cache
+C:\Users\sarof\source\repos\Hotel Management App\Hotel Management App\obj\Debug\net8.0\ref\Hotel Management App.dll

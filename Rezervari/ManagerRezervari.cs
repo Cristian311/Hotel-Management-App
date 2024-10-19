@@ -28,7 +28,7 @@ namespace Hotel_Management_App.Rezervari
             AdaugaRezervare("gabi", new List<Camere> { camere[11], camere[12] }, today.AddDays(1), today.AddDays(4));
             AdaugaRezervare("Boss", new List<Camere> { camere[1], camere[3] }, today.AddDays(1), today.AddDays(4));
 
-        }
+        }/*
         private void AdaugaRezervareInput()
         {
             Console.Write("Numele turistului: ");
@@ -73,8 +73,7 @@ namespace Hotel_Management_App.Rezervari
                 Console.Write("Introdu o data corecta pentru inceperea rezervarii: ");
                 startingDateInput = Console.ReadLine();
             }
-        }
-
+        }*/
         private void AdaugaRezervare(string GuestName, List<Camere> camere, DateTime startingDate, DateTime endingDate)
         {
             Rezervare rezervare = new Rezervare(GuestName, startingDate, endingDate, camere);

@@ -28,52 +28,73 @@ namespace Hotel_Management_App.Rezervari
             AdaugaRezervare("gabi", new List<Camere> { camere[11], camere[12] }, today.AddDays(1), today.AddDays(4));
             AdaugaRezervare("Boss", new List<Camere> { camere[1], camere[3] }, today.AddDays(1), today.AddDays(4));
 
-        }/*
-        private void AdaugaRezervareInput()
+        }
+        public void AdaugaRezervareInput()
         {
             Console.Write("Numele turistului: ");
             string NameInput = Console.ReadLine();
 
+            if (string.IsNullOrWhiteSpace(NameInput))
+            {
+                Console.WriteLine("Numele turistului nu poate fi gol.");
+                return;
+            }
+
             Console.Write("Ce camere vrea (0 - pune automat; Puneti ',' intre numere si folositi doar numere!): ");
             string CamereInput = Console.ReadLine();
             string[] CamereStringArray = CamereInput.Split(',');
-            int nrCamere;
-            for(int i = 0; i < CamereStringArray.Length; i++)
+
+            List<int> intCameraInput = new List<int>();
+            List<Camere> camereCerute = new List<Camere>();
+
+            if (CamereStringArray[0] != "0")
             {
-                int intCameraInput;
-                if (!int.TryParse(CamereStringArray[i], intCameraInput))
-                Console.Write("Introdu un numar pentru camere te rog!");
-                CamereInput = Console.ReadLine();
-            }
-            if (nrCamere == 0)
-            {
-                Console.Write("Cati musafiri sunt?: ");
-                string musafiriInput = Console.ReadLine();
-                int nrMusafiri;
-                while (!int.TryParse(musafiriInput, out nrMusafiri))
+                while (true)
                 {
-                    Console.Write("Introdu un numar pentru camere te rog!");
-                    musafiriInput = Console.ReadLine();
+                    bool allValid = true;
+
+                    for (int i = 0; i < CamereStringArray.Length; i++)
+                    {
+                        if (!int.TryParse(CamereStringArray[i], out int cameraIndex) || cameraIndex < 0 || cameraIndex >= camere.Count)
+                        {
+                            Console.Write("Introdu numere valide pentru camere (0 - pune automat): ");
+                            CamereInput = Console.ReadLine();
+                            CamereStringArray = CamereInput.Split(',');
+                            allValid = false;
+                            break;
+                        }
+                        intCameraInput.Add(cameraIndex);
+                        camereCerute.Add(camere[cameraIndex]);
+                    }
+
+                    if (allValid) break; // Exit if all inputs are valid
                 }
             }
+            else
+            {
+                // Handle automatic room assignment here
+            }
 
-
+            DateTime startingDate, endingDate;
 
             Console.Write("Cand vrea sa inceapa rezervarea?: ");
             string startingDateInput = Console.ReadLine();
-            while (!DateTime.TryParse(startingDateInput, out DateTime date))
+            while (!DateTime.TryParse(startingDateInput, out startingDate))
             {
                 Console.Write("Introdu o data corecta pentru inceperea rezervarii: ");
                 startingDateInput = Console.ReadLine();
             }
+
             Console.Write("Cand vrea sa termine rezervarea?: ");
             string endingDateInput = Console.ReadLine();
-            while (!DateTime.TryParse(startingDateInput, out DateTime date))
+            while (!DateTime.TryParse(endingDateInput, out endingDate) || endingDate <= startingDate)
             {
-                Console.Write("Introdu o data corecta pentru inceperea rezervarii: ");
-                startingDateInput = Console.ReadLine();
+                Console.Write("Data de finalizare trebuie sa fie dupa data de inceput: ");
+                endingDateInput = Console.ReadLine();
             }
-        }*/
+
+            AdaugaRezervare(NameInput, camereCerute, startingDate, endingDate);
+        }
         private void AdaugaRezervare(string GuestName, List<Camere> camere, DateTime startingDate, DateTime endingDate)
         {
             Rezervare rezervare = new Rezervare(GuestName, startingDate, endingDate, camere);

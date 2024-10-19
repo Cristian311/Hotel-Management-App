@@ -47,8 +47,9 @@ namespace Hotel_Management_App.Hotel
                 viewDates(numberOfDaysShown);
                 veziCamereSiRezervari(numberOfDaysShown);
                 ConsoleUI.appFunctionsText();
-
+                getAction();
                 Console.ReadKey();
+                Console.Clear();
             }
         }
         
@@ -58,9 +59,11 @@ namespace Hotel_Management_App.Hotel
             switch(input)
             {
                 case "1":
-                    AddReservation();
+                    managerRezervari.AdaugaRezervareInput();
                     break;
-
+                default:
+                    Console.WriteLine("Introdu un numar te rog!");
+                    break;
             }
         }
 
@@ -82,7 +85,7 @@ namespace Hotel_Management_App.Hotel
             DateTime astazi = DateTime.Today;
             for (int i = 1; i <= numberOfRooms; i++)
             {
-                Console.Write($"Camera {i} {camere[i - 1]._name}| ");
+                Console.Write($"[{i-1}]Camera {i} {camere[i - 1]._name}| ");
                 
                 for (DateTime date = DateTime.Today; date <= DateTime.Today.AddDays(numberOfDaysShown); date = date.AddDays(1))
                 {
@@ -91,8 +94,10 @@ namespace Hotel_Management_App.Hotel
                         if (ManagerRezervari.dateInBetween(date, r.Key.startingDate, r.Key.endingDate) && r.Key.camere.Contains(camere[i-1]))
                         {
                             //Console.Write($"{date.ToString("dd/MM")} {r.Key.GuestName} | {camere[i-1]._name}");
-                            Console.Write(r.Key.GuestName + " |");
+                            Console.Write(r.Key.GuestName + date.ToString("dd/MM"));
                         }
+                        else
+                            Console.Write(" ");
                     }
                 }
                 Console.WriteLine();

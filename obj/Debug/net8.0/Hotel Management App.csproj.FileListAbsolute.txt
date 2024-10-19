@@ -12,3 +12,4 @@ C:\Users\sarof\source\repos\Hotel Management App\Hotel Management App\obj\Debug\
 C:\Users\sarof\source\repos\Hotel Management App\Hotel Management App\obj\Debug\net8.0\Hotel Management App.pdb
 C:\Users\sarof\source\repos\Hotel Management App\Hotel Management App\obj\Debug\net8.0\Hotel Management App.genruntimeconfig.cache
 C:\Users\sarof\source\repos\Hotel Management App\Hotel Management App\obj\Debug\net8.0\ref\Hotel Management App.dll
+C:\Users\sarof\source\repos\Hotel Management App\Hotel Management App\obj\Debug\net8.0\Hotel Management App.sourcelink.json

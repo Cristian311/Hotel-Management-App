@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Hotel_Management_App.Rooms;
-
+using Hotel_Management_App.Tools;
 namespace Hotel_Management_App.Reservations
 {
     internal class ReservationManager
@@ -110,7 +110,7 @@ namespace Hotel_Management_App.Reservations
                 {
                     // Check for overlapping reservations
                     if (selectedRooms.Contains(room) &&
-                        PeriodsDoNotOverlap(startingDate, endingDate, existingReservation.StartDate,  existingReservation.EndDate))
+                        Util.PeriodsDoNotOverlap(startingDate, endingDate, existingReservation.StartDate,  existingReservation.EndDate))
                     {
                         isAvailable = false;
                         overlappingReservation = existingReservation;
@@ -167,17 +167,40 @@ namespace Hotel_Management_App.Reservations
                 
                 Console.WriteLine("Reservation has been deleted");
             }
-
-        }
-        public static bool IsDateInRange(DateTime date, DateTime startDate, DateTime endDate)
-        {
-            return date >= startDate && date <= endDate;
         }
 
-        public static bool PeriodsDoNotOverlap(DateTime start1, DateTime end1, DateTime start2, DateTime end2)
+        public void SeeReservationDetailsInput()
         {
-            // Periods overlap if one starts before the other ends and ends after the other starts.
-            return !(end1 < start2 || end2 < start1); // returns false if they do overlap, since the !
+            foreach (var reservation in reservations)
+            {
+                Console.Write($"Reservation [{reservation.ReservationId}] by {reservation.GuestName} for ");
+                foreach (var room in reservation.Rooms)
+                {
+                    Console.Write($"{room.Name}, ");
+                }
+                Console.WriteLine();
+            }
+            Console.Write("What reservation do you want to see?: ");
+            string input = Console.ReadLine();
+
+            int SeeReservationID;
+            while (!int.TryParse(input, out SeeReservationID))
+            {
+                Console.WriteLine("Type a number please!: ");
+                input = Console.ReadLine();
+            }
+            if (!reservations.Contains(reservations[SeeReservationID]))
+            {
+                Console.WriteLine("The reservation doesn't exist");
+            }
+            else
+            {
+                Console.WriteLine($"[{SeeReservationID}]{reservations[SeeReservationID].GuestName} from {reservations[SeeReservationID].StartDate.ToString("dd/MM")} to {reservations[SeeReservationID].EndDate.ToString("dd/MM")} with the following rooms:");
+                foreach (var room in reservations[SeeReservationID].Rooms)
+                {
+                    Console.WriteLine($"{room.Name} - {room.NumberOfGuests} guests, {room.NumberOfToilets} toilets");
+                }
+            }
         }
         
     }

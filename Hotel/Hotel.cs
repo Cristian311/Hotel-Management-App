@@ -59,6 +59,9 @@ namespace Hotel_Management_App.Hotel
                 case "2":
                     managerReservations.DeleteReservationInput();
                     break;
+                case "3":
+                    managerReservations.SeeReservationDetailsInput();
+                    break;
                 default:
                     Console.WriteLine("Please enter a valid number!");
                     break;

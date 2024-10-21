@@ -21,9 +21,9 @@ namespace Hotel_Management_App.Rooms
             for (int i = 1; i <= numberOfRooms; i++)
             {
                 if (i % 2 == 0)
-                    rooms.Add(new Room("2-PERSON ROOM", 2, 1));
+                    rooms.Add(new Room($"2-PERSON ROOM NR.{i}", 2, 1));
                 else
-                    rooms.Add(new Room("4-PERSON ROOM", 4, 1));
+                    rooms.Add(new Room($"4-PERSON ROOM NR.{i}", 4, 1));
             }
         }
     }

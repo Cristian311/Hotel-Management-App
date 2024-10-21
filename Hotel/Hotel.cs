@@ -56,6 +56,9 @@ namespace Hotel_Management_App.Hotel
                 case "1":
                     managerReservations.AddReservationInput(); // Ensure this matches the updated method name
                     break;
+                case "2":
+                    managerReservations.DeleteReservationInput();
+                    break;
                 default:
                     Console.WriteLine("Please enter a valid number!");
                     break;
@@ -77,22 +80,20 @@ namespace Hotel_Management_App.Hotel
             DateTime today = DateTime.Today;
             for (int i = 1; i <= NumberOfRooms; i++)
             {
-                Console.Write($"[{i - 1}] Room {i} {rooms[i - 1].Name} | "); // Ensure _name is accessible
+                Console.Write($"[{i - 1}] Room {i} {rooms[i - 1].Name} | ");
 
-                for (DateTime date = today; date <= today.AddDays(numberOfDaysShown); date = date.AddDays(1))
-                {
                     foreach (var r in reservationRoomPairs)
                     {
-                        if (ReservationManager.IsDateInRange(date, r.Key.StartDate, r.Key.EndDate) && r.Key.Rooms.Contains(rooms[i - 1]))
+                        if (r.Key.Rooms.Contains(rooms[i - 1]))
                         {
-                            Console.Write(r.Key.GuestName + date.ToString("dd/MM"));
+                            Console.Write(r.Key.GuestName + ' ' + r.Key.StartDate.ToString("dd/MM") + '-' + r.Key.EndDate.ToString("dd/MM"));
                         }
                         else
                         {
                             Console.Write(" ");
                         }
                     }
-                }
+                
                 Console.WriteLine();
             }
         }

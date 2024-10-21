@@ -12,6 +12,7 @@ namespace Hotel_Management_App.Reservations
         private List<Reservation> reservations = new List<Reservation>();
         private List<Room> rooms = new List<Room>();
         private Dictionary<Reservation, List<Room>> reservationRoomPairs = new Dictionary<Reservation, List<Room>>();
+        private static int NumberOfReservations = 0;
 
         public ReservationManager(List<Reservation> reservations, List<Room> rooms, Dictionary<Reservation, List<Room>> reservationRoomPairs)
         {
@@ -109,7 +110,7 @@ namespace Hotel_Management_App.Reservations
                 {
                     // Check for overlapping reservations
                     if (selectedRooms.Contains(room) &&
-                        !PeriodsDoNotOverlap(startingDate, endingDate, existingReservation.StartDate,  existingReservation.EndDate))
+                        PeriodsDoNotOverlap(startingDate, endingDate, existingReservation.StartDate,  existingReservation.EndDate))
                     {
                         isAvailable = false;
                         overlappingReservation = existingReservation;
@@ -118,10 +119,14 @@ namespace Hotel_Management_App.Reservations
                     if (!isAvailable)
                         break;
                 }
+                if (!isAvailable)
+                    break;
             }
 
-            if (isAvailable)    
+            if (isAvailable)
             {
+                newReservation.ReservationId = NumberOfReservations;
+                NumberOfReservations++;
                 reservations.Add(newReservation);
                 reservationRoomPairs.Add(newReservation, selectedRooms);
             }
@@ -131,7 +136,39 @@ namespace Hotel_Management_App.Reservations
             }
         }
 
+        public void DeleteReservationInput()
+        {
+            foreach (var reservation in reservations)
+            {
+                Console.Write($"Reservation [{reservation.ReservationId}] by {reservation.GuestName} for ");
+                foreach(var room in reservation.Rooms)
+                {
+                    Console.Write($"{room.Name}, ");
+                }
+                Console.WriteLine();
+            }
+            Console.Write("What reservation do you want to delete?: ");
+            string input = Console.ReadLine();
+            int DeleteReservationID;
+            while (!int.TryParse(input, out DeleteReservationID))
+            {
+                Console.WriteLine("Type a number please!: ");
+                input = Console.ReadLine();
+            }
+            if (!reservations.Contains(reservations[DeleteReservationID]))
+            {
+                Console.WriteLine("The reservation doesn't exist");
+            }
+            else
+            {
+                Console.WriteLine(DeleteReservationID + reservations[DeleteReservationID].GuestName);
+                reservationRoomPairs.Remove(reservations[DeleteReservationID]);
+                reservations.Remove(reservations[DeleteReservationID]);
+                
+                Console.WriteLine("Reservation has been deleted");
+            }
 
+        }
         public static bool IsDateInRange(DateTime date, DateTime startDate, DateTime endDate)
         {
             return date >= startDate && date <= endDate;
@@ -140,8 +177,7 @@ namespace Hotel_Management_App.Reservations
         public static bool PeriodsDoNotOverlap(DateTime start1, DateTime end1, DateTime start2, DateTime end2)
         {
             // Periods overlap if one starts before the other ends and ends after the other starts.
-            // So they do not overlap if one ends before the other starts, or vice versa.
-            return end1 < start2 || end2 < start1;
+            return !(end1 < start2 || end2 < start1); // returns false if they do overlap, since the !
         }
         
     }

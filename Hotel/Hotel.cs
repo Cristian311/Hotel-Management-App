@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Hotel_Management_App.Rezervari;
+using Hotel_Management_App.Reservations;// Ensure this matches the updated namespace
 using Hotel_Management_App.Rooms;
 using Hotel_Management_App.UI;
 
@@ -11,93 +8,89 @@ namespace Hotel_Management_App.Hotel
 {
     internal class Hotel
     {
-        private string HotelName;
+        private string HotelName { get; set; } // Made property
         private static bool appIsRunning = true;
-        private int numberOfRooms {  get; set; }
-        private int numberOfGuests {  get; set; }
-        private const int numberOfDaysShown = 7;
+        private int NumberOfRooms { get; set; } // Made property
+        private int NumberOfGuests { get; set; } // Made property
+        private const int NumberOfDaysShown = 7;
 
         private DateTime today = DateTime.Today;
 
+        private List<Reservation> reservations = new List<Reservation>(); // Updated to English
+        private List<Room> rooms = new List<Room>(); // Updated to English
+        private Dictionary<Reservation, List<Room>> reservationRoomPairs = new Dictionary<Reservation, List<Room>>(); // Updated to English
 
-        private List<Rezervare> rezervari = new List<Rezervare>();
-        private List<Rooms.Camere> camere = new List<Rooms.Camere>();
-        private Dictionary<Rezervare, List<Rooms.Camere>> perechiRezervariCamere = new Dictionary<Rezervare, List<Rooms.Camere>>();
+        private ReservationManager managerReservations; // Updated to English
+        private RoomManager managerRooms; // Updated to English
 
-        private ManagerRezervari managerRezervari;
-        private ManagerCamere managerCamere;
-
-        public Hotel(string HotelName, int numberOfRooms)
+        public Hotel(string hotelName, int numberOfRooms)
         {
-            this.HotelName = HotelName;
-            this.numberOfRooms = numberOfRooms;
-            managerCamere = new ManagerCamere(camere);
-            managerCamere.initCamere(numberOfRooms);
+            HotelName = hotelName; // Use property
+            NumberOfRooms = numberOfRooms; // Use property
+            managerRooms = new RoomManager(rooms);
+            managerRooms.InitializeRooms(numberOfRooms); // Ensure this populates the rooms list
 
-            managerRezervari = new ManagerRezervari(rezervari, camere, perechiRezervariCamere);
-            managerRezervari.initRezervari();
+            managerReservations = new ReservationManager(reservations, rooms, reservationRoomPairs);
+            managerReservations.InitializeReservations(); // Ensure this initializes reservations correctly
         }
-        
+
         public void startApplication()
         {
-            while(appIsRunning)
+            while (appIsRunning)
             {
-                
-                ConsoleUI.appHeader(HotelName);
-                viewDates(numberOfDaysShown);
-                veziCamereSiRezervari(numberOfDaysShown);
-                ConsoleUI.appFunctionsText();
+                ConsoleUI.AppHeader(HotelName);
+                viewDates(NumberOfDaysShown);
+                seeRoomsAndReservations(NumberOfDaysShown); // Renamed method for clarity
+                ConsoleUI.AppFunctionsText();
                 getAction();
                 Console.ReadKey();
                 Console.Clear();
             }
         }
-        
+
         private void getAction()
         {
             string input = Console.ReadLine();
-            switch(input)
+            switch (input)
             {
                 case "1":
-                    managerRezervari.AdaugaRezervareInput();
+                    managerReservations.AddReservationInput(); // Ensure this matches the updated method name
                     break;
                 default:
-                    Console.WriteLine("Introdu un numar te rog!");
+                    Console.WriteLine("Please enter a valid number!");
                     break;
             }
         }
 
-        private void AddReservation()
-        {
-
-        }
         private void viewDates(int numberOfDaysShown)
         {
             Console.Write("                          | ");
             for (DateTime date = DateTime.Today; date <= DateTime.Today.AddDays(numberOfDaysShown); date = date.AddDays(1))
             {
-                Console.Write(date.ToString("dd/MM") + " | "); // You can format the date as you wish
+                Console.Write(date.ToString("dd/MM") + " | ");
             }
             Console.WriteLine();
         }
-        private void veziCamereSiRezervari(int numberOfDaysShown)
+
+        private void seeRoomsAndReservations(int numberOfDaysShown) // Renamed for clarity
         {
-            DateTime astazi = DateTime.Today;
-            for (int i = 1; i <= numberOfRooms; i++)
+            DateTime today = DateTime.Today;
+            for (int i = 1; i <= NumberOfRooms; i++)
             {
-                Console.Write($"[{i-1}]Camera {i} {camere[i - 1]._name}| ");
-                
-                for (DateTime date = DateTime.Today; date <= DateTime.Today.AddDays(numberOfDaysShown); date = date.AddDays(1))
+                Console.Write($"[{i - 1}] Room {i} {rooms[i - 1].Name} | "); // Ensure _name is accessible
+
+                for (DateTime date = today; date <= today.AddDays(numberOfDaysShown); date = date.AddDays(1))
                 {
-                    foreach (var r in perechiRezervariCamere)
+                    foreach (var r in reservationRoomPairs)
                     {
-                        if (ManagerRezervari.dateInBetween(date, r.Key.startingDate, r.Key.endingDate) && r.Key.camere.Contains(camere[i-1]))
+                        if (ReservationManager.IsDateInRange(date, r.Key.StartDate, r.Key.EndDate) && r.Key.Rooms.Contains(rooms[i - 1]))
                         {
-                            //Console.Write($"{date.ToString("dd/MM")} {r.Key.GuestName} | {camere[i-1]._name}");
                             Console.Write(r.Key.GuestName + date.ToString("dd/MM"));
                         }
                         else
+                        {
                             Console.Write(" ");
+                        }
                     }
                 }
                 Console.WriteLine();

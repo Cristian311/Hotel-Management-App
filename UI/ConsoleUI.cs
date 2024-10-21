@@ -1,31 +1,27 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Hotel_Management_App.UI
 {
     internal class ConsoleUI
     {
-        public static void appFunctionsText()
+        public static void AppFunctionsText()
         {
             Console.WriteLine();
-            Console.WriteLine("Funcii: ");
-            Console.WriteLine("1. Adauga o rezervare");
-            Console.WriteLine("2. Sterge o rezervare");
-            Console.WriteLine("3. Vezi detalii la o rezervare");
-            Console.WriteLine("4. Vezi detalii la o camera");
-            Console.WriteLine("5. Actualizeaza o rezervare");
-            Console.WriteLine("6. Iesi");
-            Console.Write("Ce vrei sa faci?: ");
+            Console.WriteLine("Functions: ");
+            Console.WriteLine("1. Add a reservation");
+            Console.WriteLine("2. Delete a reservation");
+            Console.WriteLine("3. View reservation details");
+            Console.WriteLine("4. View room details");
+            Console.WriteLine("5. Update a reservation");
+            Console.WriteLine("6. Exit");
+            Console.Write("What would you like to do?: ");
         }
-        public static void appHeader(string HotelName)
+
+        public static void AppHeader(string hotelName)
         {
-            Console.WriteLine($"*** {HotelName} ***");
+            Console.WriteLine($"*** {hotelName} ***");
             Console.WriteLine("    -----------------------");
             Console.WriteLine();
         }
-
     }
 }
